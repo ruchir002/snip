@@ -1,0 +1,226 @@
+Aim: Design atleast 10 queries for suitable database application using SQL DML statements insert,select,update,delete with operators,functions and set operator. 
+
+(base) sspm@sspm:~$ sudosu
+[sudo] password for sspm: root@sspm:/home/sspm# service start mysqld start start: unrecognized service root@sspm:/home/sspm# mysql -u root -p Enter password: 
+Welcome to the MySQL monitor. Commands end with ; or \g. 
+Your MySQL connection id is 8 
+Server version: 8.0.39-0ubuntu0.22.04.1 (Ubuntu) 
+Copyright (c) 2000, 2024, Oracle and/or its affiliates. 
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates. 
+Other names may be trademarks of their respective owners. 
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement. 
+mysql> create database emp; Query OK, 1 row affected (0.08 sec) mysql> use emp; Database changed 
+mysql> create table employee(emp_idint,namevarchar(10),salary int); Query OK, 0 rows affected (1.65 sec) mysql> insert into 
+employee(emp_id,name,salary)values(1,'tejaswini',55000),(2,'ekta',60000),(3,'sakshi',66000),(4,'nandini',70000),( 
+5,'siddhi',90000),(6,'ak shta',88000),(7,'shweta',77900),(8,'sujata',65000),(9,'gauri',98000),(10,'pranali',55670); Query OK, 10 rows affected (0.11 sec) Records: 10 
+Duplicates: 0 Warnings: 0 mysql> select * from employee; 
++	+	+	+ 
+| emp_id | name 	| salary | 
++	+	+	+
+| 	1 | tejaswini | 55000 | 
+| 	2 | ekta	| 60000 | 
+| 	3 | sakshi	| 66000 | 
+| 	4 | nandini | 70000 | 
+| 	5 | siddhi 	| 90000 | 
+| 6 | akshta | 88000 | | 7 | shweta | 77900 | 
+| 	8 | sujata	| 65000 | 
+| 	9 | gauri	| 98000 | 
+| 	10 | pranali | 55670 | 
++	+	+	+ 
+10 rows in set (0.00 sec) mysql> alter table employee add job varchar(10); 
+Query OK, 0 rows affected (0.40 sec) Records: 0 Duplicates: 0 Warnings: 0 
+mysql> select * from employee; 
++	+	+	+ 	+ 
+| emp_id | name 	| salary | job | 
++	+	+	+ 	+ 
+| 	1 | tejaswini | 55000 | NULL | 
+| 	2 | ekta	| 60000 | NULL | 
+| 3 | sakshi | 66000 | NULL | | 4 | nandini | 70000 | NULL | | 5 | siddhi | 90000 | NULL | 
+| 	6 | akshta	| 88000 | NULL | 
+| 	7 | shweta	| 77900 | NULL | 
+| 8 | sujata | 65000 | NULL | | 9 | gauri | 98000 | NULL | 
+| 	10 | pranali | 55670 | NULL | 
++	+	+	+  + 
+10 rows in set (0.00 sec) mysql> update employee set job='manager' where emp_id=1; Query OK, 1 row affected (0.05 sec) Rows matched: 
+1 Changed: 1 Warnings: 0 mysql> select * from employee; 
++	+	+	+ 	+ 
+| emp_id | name 	| salary | job 	| 
++	+	+	+ 	+ 
+| 	1 | tejaswini | 55000 | manager | 
+| 	2 | ekta	| 60000 | NULL 	| 
+| 	3 | sakshi	| 66000 | NULL 	| 
+| 	4 | nandini | 70000 | NULL 	| 
+| 	5 | siddhi 	| 90000 | NULL 	| 
+| 	6 | akshta	| 88000 | NULL 	| 
+| 	7 | shweta	|  77900 | NULL 	| 
+| 	8 | sujata	| 65000 | NULL 	| | 	9 | gauri	| 98000 | NULL 	| 
+| 	10 | pranali | 55670 | NULL 	| 
++	+	+	+  + 
+10 rows in set (0.00 sec) mysql> update employee set job='clark' where emp_id=2; Query OK, 1 row affected (0.05 sec) Rows matched: 1 Changed: 1 
+Rows matched: 1 Changed: 1 Warnings: 0 mysql> update employee set job='CA' where emp_id=6; 
+Query OK, 1 row affected (0.21 sec) Rows matched: 1 Changed: 1 Warnings: 0 mysql> update employee set job='PA' where emp_id=7; 
+Query OK, 1 row affected (0.06 sec) Rows matched: 1 Changed: 1 Warnings: 0 mysql> update employee set job='manager' where emp_id=8; 
+Query OK, 1 row affected (0.06 sec) Rows matched: 1 Changed: 1 Warnings: 0 mysql> update employee set job='peon' where emp_id=9; 
+Query OK, 1 row affected (0.05 sec) Rows matched: 1 Changed: 
+1 Warnings: 0 mysql> update employee set job='PA' where emp_id=10; Query OK, 1 row affected (0.06 sec) Rows matched: 
+1 Changed: 1 Warnings: 0 mysql> select * from employee; 
++	+	+	+	+ 
+| emp_id | name 	| salary | job 	| 
++	+	+	+	+ 
+| 	1 | tejaswini | 55000 | manager | 
+| 	2 | ekta	| 60000 | clark	| 
+| 	3 | sakshi	|  66000 | assistant | 
+| 	4 | nandini| 70000 | manager | 
+| 	5 | siddhi 	| 90000 | reception | 
+| 	6 | akshta	| 88000 | CA 	| 
+| 	7 | shweta	| 77900 | PA 	| 
+| 	8 | sujata	| 65000 | manager  |
+| 	9 | gauri	| 98000 | peon 	| 
+| 	10 | pranali | 55670 | PA 	| 
++	+	+	+	+ 
+10 rows in set (0.00 sec) mysql> select * from employee where salary<56000; 
++	+	+	+ 	+ 
+| emp_id | name 	| salary | job 	| 
++	+	+	+ 	+ 
+| 	1 | tejaswini | 55000 | manager | 
+| 	10 | pranali | 55670 | PA 	| 
++	+	+	+  + 
+2 rows in set (0.00 sec) 
+mysql> select * from employee where salary in(66000,98000); 
++	+ 	+	+	+ 
+| emp_id | name | salary | job 	| 
++	+ 	+	+	+ 
+| 	3 | sakshi | 66000 | assistant | 
+| 	9 | gauri | 98000 | peon 	| 
++	+  +	+	+ 
+2 rows in set (0.00 sec) 
+mysql> select distinct(salary)from employee; 
++	+ 
+| salary | 
++	+ 
+| 55000 | 
+| 60000 | 
+| 66000 | 
+| 70000 | 
+| 90000 | 
+| 88000 | 
+| 77900 | 
+| 65000 | 
+| 98000 | 
+| 55670 | 
++	+ 
+10 rows in set (0.10 sec) mysql> select * from employee order by salary; +	+	+	+	+ 
+| emp_id | name 	| salary | job 	| 
++	+	+	+	+ 
+| 	1 | tejaswini | 55000 | manager | 
+| 	10 | pranali | 55670 | PA 	| 
+| 	2 | ekta	| 60000 | clark	| 
+| 	8 | sujata	| 65000 | manager  |
+| 	3 | sakshi	|  66000 | assistant | 
+| 	4 | nandini | 70000 | manager | 
+| 	7 | shweta	| 77900 | PA 	| 
+| 	6 | akshta	| 88000 | CA 	| 
+| 	5 | siddhi 	| 90000 | reception | 
+| 	9 | gauri	| 98000 | peon 	| 
++	+	+	+	+ 
+10 rows in set (0.01 sec) mysql> delete from employee where salary=55000; 
+Query OK, 1 row affected (0.06 sec) mysql> select * from employee; 
++	+ 	+	+	+ 
+| emp_id | name 	| salary | job 	| 
++	+ 	+	+	+ 
+| 	2 | ekta	| 60000 | clark	| 
+| 	3 | sakshi  | 66000 | assistant | 
+| 	4 | nandini|  70000 | manager | 
+| 	5 | siddhi | 90000 | reception | 
+| 	6 | akshta | 88000 | CA 	| 
+| 	7 | shweta | 77900 | PA 	| 
+| 	8 | sujata | 65000 | manager | 
+| 	9 | gauri | 98000 | peon 	| 
+| 	10 | pranali | 55670 | PA 	| 
++	+  +	+	+ 
+9 rows in set (0.00 sec) 
+mysql> select * from employee where salary between 60000 and 90000; 
++	+ 	+	+	+ 
+| emp_id | name 	| salary | job 	| 
++	+ 	+	+	+ 
+| 	2 | ekta	| 60000 | clark	| 
+| 	3 | sakshi  | 66000 | assistant | 
+| 	4 | nandini|  70000 | manager | 
+| 	5 | siddhi | 90000 | reception | 
+| 	6 | akshta | 88000 | CA 	| 
+| 	7 | shweta | 77900 | PA 	| 
+| 	8 | sujata | 65000 | manager | 
++	+  +	+	+ 
+7 rows in set (0.00 sec) 
+mysql> select * from employee where salary not between 45000 and 70000; 
++	+ 	+	+	+ 
+| emp_id | name | salary | job 	| 
++	+ 	+	+	+ 
+| 	5 | siddhi | 90000 | reception | 
+| 	6 | akshta | 88000 | CA 	| 
+|	7 | shweta | 77900 | PA 	| 
+| 	9 | gauri | 98000 | peon 	| 
++	+  +	+	+ 
+4 rows in set (0.00 sec) mysql> select * from employee where salary=(select min(salary)from employee); 
++	+ 	+	+ 	+ 
+| emp_id | name 	| salary | job | 
++	+ 	+	+ 	+ 
+| 	10 | pranali | 55670 | PA | 
++	+ 	+	+ 	+ 
+1 row in set (0.00 sec) 
+mysql> select sum(salary)from employee; 
++ 	+ 
+| sum(salary) | 
++ 	+ 
+| 	670570 | 
++ 	+ 
+1 row in set (0.00 sec) mysql> select count(salary)from employee; 
++ 	+ 
+| count(salary) | 
++ 	+ 
+| 	9 | 
++ 	+ 
+1 row in set (0.00 sec) 
+mysql> create table student(id int,namevarchar(10)); 
+Query OK, 0 rows affected (0.38 sec) mysql> insert into student(id,name)values(1,'sneha'),(2,'shlok'),(3,'om'); 
+Query OK, 3 rows affected (1.38 sec) Records: 3 
+Duplicates: 0 Warnings: 0 mysql> select * from student; 
++ 	+	+ 
+| id | name 	| 
++ 	+	+ 
+| 	1 | sneha	| 
+| 	2 | shlok | 
+| 	3 | om | 
++  +	+ 
+3 rows in set (0.00 sec) 
+mysql> select id from student union select emp_id from employee; 
++ 	+ 
+| id | 
++ 	+ 
+| 	1 | 
+| 	2 | 
+| 	3 | 
+| 	4 | 
+| 	5 | 
+| 	6 | 
+| 	7 | 
+| 	8 | 
+|	9 | 
+| 10 | 
++------+ 
+10 rows in set (0.00 sec) mysql> select name from student union select name from employee; 
++	+ 
+| name	| 
++	+ 
+| sneha | 
+| shlok | 
+| om	| 
+| ekta	| 
+| nandini | 
+| akshta	| 
+| shweta	| 
+| sujata	| 
+| gauri	| 
+| pranali | 
++	+ 
+10 rows in set (0.00 sec) 
