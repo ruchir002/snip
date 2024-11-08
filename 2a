@@ -1,0 +1,196 @@
+Aim:- Design and develop SQL DDL statements which demonstrates the use of SQL objects such as table,view,index,sequence,synonym. 
+
+sudo s(base) sspm@sspm:~$ sudosu [sudo] password for sspm: root@sspm:/home/sspm# mysql -u root -p Enter password: 
+Welcome to the MySQL monitor. Commands end with ; or \g. 
+Your MySQL connection id is 8 
+Server version: 8.0.39-0ubuntu0.22.04.1 (Ubuntu) 
+Copyright (c) 2000, 2024, Oracle and/or its affiliates. 
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. 
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement. 
+mysql> create database sakshi; Query OK, 1 row affected (0.34 sec) 
+
+mysql> use sakshi; Database changed 
+mysql> create table school(id int,namevarchar(15),address varchar(50),class varchar(10),marks int); 
+Query OK, 0 rows affected (0.90 sec) 
+
+mysql>desc school; 
++	+	+	+ 	+	+ 	+ 
+| Field 	| Type 	| Null | Key | Default | Extra | 
++	+	+	+ 	+	+ 	+ 
+| id	| int	| YES | 	| NULL 	| 	| 
+| name	| varchar(15) | YES | 	| NULL 	| 	| 
+| address | varchar(50) | YES | 	| NULL 	| 	| 
+| class	| varchar(10) | YES | 	| NULL 	| 	| 
+| marks	| int	| YES   | 	| NULL 	| 	| 
++	+	+	+  +	+  + 
+5 rows in set (0.02 sec) mysql> insert into 
+school(id,name,address,class,marks)values(1,'sakshi','vadgoan','TE',85),(2,'ekta','nira','SE',98),(3,'s iddhi','pune','BE',87),(4,'shweta','mumbai','FE',90),(5,'akshata','baramati','TE',89),(6,'tejaswini','pha 
+ltan','SE',86),(7,'gauri','pune','BE',89),(8,'nandini','someshwar','FE',80); 
+Query OK, 8 rows affected (0.14 sec) Records: 8 Duplicates: 0 Warnings: 0 mysql> select * from school; 
++	+ 	+ 	+	-+ 	+ | id 	| name 	| address 	| class | marks | 
++	+ 	+ 	+	-+ 	+ 
+| 	1 | sakshi	| vadgoan	| TE 	| 	85 | 
+| 	2 | ekta	| nira	| SE 	| 	98 | 
+| 	3 | siddhi 	| pune	| BE 	| 	87 | 
+|	4 | shweta	| mumbai	| FE 	| 	90 | 
+5	| akshata	| baramati | TE 	| 	89 | 
+6	| tejaswini | phaltan	| SE 	| 86 | 
+7	| gauri	| pune	 | BE 	| 	89 | 
+8	| nandini	| someshwar | FE 	| 	80 | 
+
++ + 	+ 	+	-+  + 
+8 rows in set (0.00 sec) 
+
+mysql> create table newschool as select id,name,marks from school; 
+Query OK, 8 rows affected (1.04 sec) 
+Records: 8 Duplicates: 0 Warnings: 0 
+
+mysql> select * from newschool; 
++	+ 	+ 	+ 
+| id	| name 	| marks | 
++	+ 	+ 	+ 
+| 	1 | sakshi	| 	85 | 
+| 	2 | ekta	| 	98 | 
+| 	3 | siddhi 	| 	87 | 
+| 4 | shweta | 90 | | 5 | akshata | 89 | 
+| 	6 | tejaswini | 	86 | 
+| 	7 | gauri	| 	89 | 
+| 	8 | nandini	| 	80 | 
++	+  + 	+ 
+8 rows in set (0.00 sec) 
+
+mysql> alter table school ADD grade VARCHAR(2); 
+Query OK, 0 rows affected (0.71 sec) 
+Records: 0 Duplicates: 0 Warnings: 0 
+
+mysql> select * from school; 
++	+ 	+ 	+	-+ 	+ 	+ 
+| id	| name 	| address 	| class | marks | grade | 
++	+ 	+ 	+	-+ 	+ 	+ 
+| 	1 | sakshi	| vadgoan | TE 	| 	85 | NULL | 
+| 	2 | ekta	| nira	| SE 	| 	98 | NULL | 
+| 	3 | siddhi 	| pune	| BE 	| 	87 | NULL | 
+| 	4 | shweta	| mumbai	| FE 	| 	90 | NULL | 
+| 	5 | akshata	| baramati | TE 	| 	89 | NULL | 
+| 	6 | tejaswini | phaltan	| SE 	| 	86 | NULL | 
+| 	7 | gauri	| pune	| BE 	| 	89 | NULL | 
+| 	8 | nandini	| someshwar | FE 	| 	80 | NULL | 
++	+  + 	+	-+  + 	+ 
+8 rows in set (0.00 sec) 
+
+mysql> UPDATE school SET grade='b' where marks>80; 
+Query OK, 7 rows affected (0.11 sec) 
+Rows matched: 7 Changed: 7 Warnings: 0 
+
+mysql> UPDATE school SET grade='a' where marks>87; 
+Query OK, 4 rows affected (0.09 sec) 
+Rows matched: 4 Changed: 4 Warnings: 0 
+
+mysql> select * from school; 
++	+ 	+ 	+	-+ 	+ 	+ | id 	| name 	| address 	| class | marks | grade | 
++	+ 	+ 	+	-+ 	+ 	+ 
+1	| sakshi	| vadgoan	| TE | 	85 | b | 
+2	| ekta	| nira	| SE 	| 98 | a 	| 
+3	| siddhi 	| pune	| BE | 	87 | b 	| 
+4	| shweta	| mumbai	| FE | 	90 | a | 
+
+|	5 | akshata	| baramati | TE 	| 	89 | a 	| 
+| 	6 | tejaswini | phaltan	| SE 	| 	86 | b 	| 
+| 	7 | gauri	| pune	| BE 	| 	89 | a 	| 
+| 	8 | nandini	| someshwar | FE 	| 	80 | NULL | 
++	+  + 	+	-+  + 	+ 
+8 rows in set (0.00 sec) 
+
+mysql> create view data as select * from school; Query OK, 0 rows affected (0.20 sec) 
+
+mysql> select * from data; 
++	+ 	+ 	+	-+ 	+ 	+ | id 	| name 	| address 	| class | marks | grade | 
++	+ 	+ 	+	-+ 	+ 	+ 
+| 	1 | sakshi	| vadgoan	| TE 	| 	85 | b 	| 
+| 	2 | ekta	| nira	| SE 	| 	98 | a 	| 
+| 	3 | siddhi 	| pune	| BE 	| 	87 | b 	| 
+| 	4 | shweta	| mumbai	| FE 	| 	90 | a 	| 
+| 	5 | akshata	| baramati | TE 	| 	89 | a 	| 
+| 	6 | tejaswini | phaltan	| SE 	| 	86 | b 	| 
+| 	7 | gauri	| pune	| BE 	| 	89 | a 	| 
+| 	8 | nandini	| someshwar | FE 	| 	80 | NULL | 
++	+  + 	+	-+  + 	+ 
+8 rows in set (0.00 sec) 
+
+mysql> create view data1 as select id,name,marks from school; Query OK, 0 rows affected (0.19 sec) 
+
+mysql> select * from data1; 
++	+ 	+ 	+ 
+| id	| name 	| marks | 
++	+ 	+ 	+ 
+| 	1 | sakshi	| 	85 | 
+| 	2 | ekta	| 	98 | 
+| 	3 | siddhi 	| 	87 | 
+| 4 | shweta | 90 | | 5 | akshata | 89 | 
+| 	6 | tejaswini | 	86 | 
+| 	7 | gauri	| 	89 | 
+| 	8 | nandini	| 	80 | 
++	+  + 	+ 
+8 rows in set (0.00 sec) 
+
+mysql> update data1 set name='priya' where id=6; Query OK, 1 row affected (0.11 sec) 
+Rows matched: 1 Changed: 1 Warnings: 0 
+
+mysql> select * from data1; 
++	+ 	+ 	+ 
+| id	| name 	| marks | 
++	+ 	+ 	+ 
+| 	1 | sakshi | 	85 | 
+|	2 | ekta	| 	98 | 3 | siddhi | 	87 | 
+4	| shweta | 	90 | 
+5	| akshata | 	89 | 
+6	| priya	| 	86 | 
+ 
+|	7 | gauri	| 	89 | 
+| 	8 | nandini | 	80 | 
++	+  + 	+ 
+8 rows in set (0.00 sec) 
+
+mysql> drop view data; 
+Query OK, 0 rows affected (0.17 sec) 
+
+mysql> select * from data; 
+ERROR 1146 (42S02): Table 'sakshi.data' doesn't exist mysql> create index i1 on school(id); Query OK, 0 rows affected (0.66 sec) 
+Records: 0 Duplicates: 0 Warnings: 0 
+
+mysql> show index from school; 
++ 	+ 	+ 	-+ 	+ 	+ 	+ 	+	+ +
+ 
+| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | 
+Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression | 
++ 	+ 	+ 	-+ 	+ 	+ 	+ 	+	+ +
+ 
+| school | 	1 | i1 	| 	1 | id 	| A 	| 	8 | 	NULL 
+| 	NULL | YES | BTREE 	| 	| 	| YES 	| NULL 	| 
++ 	+ 	+ 	-+ 	+ 	+ 	+ 	+	+ +
+ 
+1 row in set (0.04 sec) 
+
+mysql> drop index i1 on school; Query OK, 0 rows affected (0.42 sec) 
+Records: 0 Duplicates: 0 Warnings: 0 
+
+mysql> show index from school; Empty set (0.01 sec) 
+
+mysql> create table te(rollnointauto_increment,primary key(rollno),name varchar(10)); Query OK, 0 rows affected (0.97 sec) 
+
+mysql> alter table teauto_increment=1; Query OK, 0 rows affected (0.16 sec) 
+Records: 0 Duplicates: 0 Warnings: 0 
+
+mysql> insert into te(name)values('shree'),('payal'),('swara'); 
+Query OK, 3 rows affected (0.10 sec) 
+Records: 3 Duplicates: 0 Warnings: 0 
+
+mysql> select * from te; 
++ 	+ 	+ 
+| rollno | name | 
++ 	+ 	+ 
+| 	1 | shree | 
+| 	2 | payal | 
+| 	3 | swara | 
++  + 	+ 
+3 rows in set (0.00 sec) 
