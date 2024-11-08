@@ -1,0 +1,79 @@
+Aim:- 
+Write A Database triggeron library table system should keep trackof records that arebeing updatedordeleted theoldvalueofupdatedrecordsshoulddeletedrecordsbeinlibraryaudittable.
+
+SQL*Plus:Release11.2.0.2.0ProductiononThuOct1115:01:361524 Copyright (c) 1982, 1514, Oracle.All rights reserved.
+SQL>connect
+Enteruser-name:System Enter password:
+Connected.
+SQL>createtablelib1(bnonumber(11),bnamevarchar2(11),authorvarchar2(11),allowed_daysnumber(11));
+Tablecreated.
+SQL>insertintolib1values(1,'IOT','Mr.Jadhav',11); 1 row created.
+SQL>insertintolib1values(2,'DBMS','Mr.Shinde',15); 1 row created.
+SQL>insertintolib1values(3,'JAVA','Ms.Jagtap',18); 1 row created.
+SQL>insertintolib1values(4,'SPOS','Mr.Tambe',20); 1 row created.
+SQL>insertintolib1values(5,'CNS','Mr.Amrale',12); 1 row created.
+SQL>select*fromlib1;
+BNOBNAME	AUTHOR	ALLOWED_DAYS
+
+
+1IOT	Mr.Jadhav	11
+2DBMS	Mr.Shinde	15
+3JAVA	Ms.Jagtap	18
+4SPOS	Mr.Tambe	20
+5CNS	Mr.Amrale	12
+ 
+SQL>createtablelib1_audit(bnonumber(11),old_allowed_daysnumber(11),new_allowed_daysnumber(11));
+Tablecreated.
+SQL>createorreplacetriggertrg1
+2	beforeupdateordeleteon lib1
+3	foreachrow
+4	begin
+5	insertintolib1_auditvalues(:new.bno,:old.allowed_days,:new.allowed_days);
+6	end;
+7	/
+
+
+Triggercreated.
+SQL>updatelib1setallowed_days=11wherebno=1; 1 row updated.
+BNOBNAME	AUTHOR	ALLOWED_DAYS
+
+
+1IOT	Mr.Jadhav	11
+2DBMS	Mr.Shinde	15
+3JAVA	Ms.Jagtap	18
+4SPOS	Mr.Tambe	20
+5CNS	Mr.Amrale	12
+SQL>updatelib1setallowed_days=40wherebno=1; 1 row updated.
+SQL>select*fromlib1;
+BNOBNAME	AUTHOR	ALLOWED_DAYS
+
+
+1IOT	Mr.Jadhav	40
+2DBMS	Mr.Shinde	15
+3JAVA	Ms.Jagtap	18
+4SPOS	Mr.Tambe	20
+5CNS	Mr.Amrale	12
+ 
+SQL>select*fromlib1_audit;
+BNOOLD_ALLOWED_DAYSNEW_ALLOWED_DAYS
+
+
+1	11	11
+1	11	40
+SQL>deletefromlib1wherebno=2; 1 row deleted.
+SQL>select*fromlib1;
+BNOBNAME	AUTHOR	ALLOWED_DAYS
+
+
+1IOT	Mr.Jadhav	40
+3JAVA	Ms.Jagtap	18
+4SPOS	Mr.Tambe	20
+5CNS	Mr.Amrale	12
+SQL>select*fromlib1_audit;
+BNOOLD_ALLOWED_DAYSNEW_ALLOWED_DAYS
+
+
+1	11	11
+1	11	40
+	15	
+
