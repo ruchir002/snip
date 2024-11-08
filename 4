@@ -1,0 +1,89 @@
+Aim : Write a Pl/SQL block of code for accepting the roll_no and name of the book from user and also checking the number of days and performance once comparision between days from date of issue and also for after submitting the block status of get changed.  
+QUERIES :
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Sep 26 13:12:16 2024 Copyright (c) 1982, 2014, Oracle.  All rights reserved. 
+SQL> connect System Enter password: 
+Connected. 
+SQL> create table library20(roll_no number(10),name varchar(20),date_of_issuedate,name_of_bookvarchar(10),status varchar(20)); Table created. 
+SQL> insert into library20 values(1,'Siddhi','10-April-2024','DBMS','Retuen'); 1 row created. 
+SQL> insert into library20 values(2,'Rajshri','10-April-2024','DBMS','Return'); 
+1 row created. 
+SQL> select*from library20; 
+   ROLL_NO NAME                 DATE_OF_I NAME_OF_BO STATUS 
+---------- -------------------- --------- ---------- -------------------- 
+1	Siddhi               10-APR-24 DBMS       Retuen
+2	Rajshri              10-APR-24 DBMS       Return 
+SQL> insert into library20 values(3,'Sakshi','10-April-2024','DBMS','Return'); 1 row created. 
+SQL> insert into library20 values(4,'Ekta','20-April-2024','JAVA','No Return'); 1 row created. 
+SQL> insert into library20 values(5,'Gauri','20-April-2024','JAVA','No Return'); 
+1 row created. 
+SQL> select*from library20; 
+
+   ROLL_NO NAME                 DATE_OF_I NAME_OF_BO STATUS 
+---------- -------------------- --------- ---------- -------------------- 
+1	Siddhi               10-APR-24 DBMS       Retuen
+2	Rajshri              10-APR-24 DBMS       Return 
+3	Sakshi               10-APR-24 DBMS       Return 
+4	Ekta                 20-APR-24 JAVA       No Return 
+5	Gauri                20-APR-24 JAVA       No Return 
+
+SQL> create table fine2(roll_no number(10),date_of_returndate,amount number(10)); Table created. 
+SQL> insert into fine2 values(1,'25-April-2024',10); 1 row created. 
+SQL> insert into fine2 values(2,'25-April-2024',10); 1 row created. 
+SQL> insert into fine2 values(3,'25-April-2024',10); 1 row created. 
+SQL> insert into fine2 values(4,'25-April-2024',10); 1 row created. 
+SQL> insert into fine2 values(5,'25-April-2024',10); 
+1	row created. 
+SQL> select*from fine2; 
+   ROLL_NO DATE_OF_R     AMOUNT 
+---------- --------- ----------          1 25-APR-24         10 
+2	25-APR-24         10 
+3	25-APR-24         10 
+4	25-APR-24         10          5 25-APR-24         10 
+SQL> declare 
+2	rno number(3):=&roll_no; 
+3	bname varchar2(10):'&name_of_book'; 
+4	no_day number(10); 
+5	issue date date; 
+6	fine2amt number(5):=0; 
+7	begin 
+8	select date_of_issueintiissue_date from library20 where roll_no=rno; 
+9	select sysdate-to_date
+10	select sysdate-to_date(issue_date)days into no_dayfrm dual; 
+11	if(no_day>=15 and no_day<=30)then 
+12	fine2amt:no_day*5; 
+13	elseifno_day>30then 
+14	elseifno_day>30 then 
+15	fine2amt:=no_day*50; 
+16	end if; 
+17	update library20 set status='return'whereroll_no=rno; 
+18	if fine2amt>0then 
+19	insert into fine2 values(rno,sysdate,fine2amt); 
+20	endif; 
+21	EXCEPTION 
+22	WHEN no_data_found THEN 
+23	dbms_output.put_line('record not found'); 
+24	end; 
+25	/ 
+Enter value for roll_no: 3 old   2: rnonumber(3):=&roll_no; new   2: rno number(3):=3; Enter value for name_of_book: DBMS old   3: bname varchar2(10):'&name_of_book'; new   3: bname varchar2(10):'DBMS'; 
+PL/SQL procedure successfully completed. 
+SQL> select*from fine2; 
+
+
+
+   ROLL_NO DATE_OF_R     AMOUNT 
+---------- --------- ----------          1 25-APR-24         10 
+2	25-APR-24         10 
+3	25-APR-24         10 
+4	25-APR-24         10 
+5	25-APR-24         10 
+SQL> select*from library20; 
+   ROLL_NO NAME                 DATE_OF_I NAME_OF_BO STATUS 
+---------- -------------------- --------- ---------- -------------------- 
+1	Siddhi               10-APR-24 DBMS       Retuen
+2	Rajshri              10-APR-24 DBMS       Return 
+3	Sakshi               10-APR-24 DBMS       Return 
+4	Ekta                 20-APR-24 JAVA       No Return 
+5	Gauri                20-APR-24 JAVA       No Return 
+
+
+
