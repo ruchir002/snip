@@ -1,0 +1,72 @@
+Aim:
+Cursors : All types:implicit,Explicit, Cursor For loop,Parameterized Cursor).Write a PL/SQL block ofcode using parasmeterized cursor ,that will merge the Data available in the newly created table new with thedata available in the table Old if the data i9n the first table already exists in the second table then that shouldBeskipped.
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Oct 10 15:01:36 2024Copyright (c)1982,2014,Oracle.Allrights reserved.
+SQL>connect
+Enter user-name: systemEnterpassword:
+Connected.
+SQL> create table old(roll_nonumber,name varchar2(20));Tablecreated.
+SQL> insert into old values(1,'Saurbh');1rowcreated.
+SQL> insert into old values(2,'Priya');1rowcreated.
+SQL> insert into old values(3,'Payal');1rowcreated.
+SQL> insert into old values(4,'Ayush');1rowcreated.
+SQL> create table new(roll_nonumber,name varchar2(20));Tablecreated.
+SQL> insert into new values(5,'Shree');1rowcreated.
+SQL> insert into new values(6,'Swara');1rowcreated.
+SQL> insert into new values(7,'Sakshi');1rowcreated.
+SQL>insertintonewvalues(8,'Saee');
+ 
+1rowcreated.
+SQL> select*from old;ROLL_NO	NAME
+
+
+1	Saurbh
+2	Priya
+3	Payal
+4	Ayush
+
+
+SQL> select*from new;ROLL_NO	NAME
+
+
+5	Shree
+6	Swara
+7	Sakshi
+8	Saee
+SQL>declare
+2	cursorcur1 is
+3	selectroll_no,name fromold;
+4	cursorcur2 is
+5	selectroll_nofromnew;
+6	rnumber(5);
+7	rnonumber(5);
+8	nmvarchar2(10);
+9	begin
+10	opencur1;
+11	opencur2;
+12	loop
+13	fetchcur1intorno,nm;
+14	fetchcur2intor;
+15	exitwhencur1%found=false;
+16	ifr<>rnothen
+ 
+17	insertintonewvalues(rno,nm);
+18	endif;
+19	endloop;
+20	closecur1;
+21	end;
+22	/
+PL/SQLproceduresuccessfullycompleted.
+
+
+SQL> select*from new;ROLL_NO	NAME
+
+
+5	Shree
+6	Swara
+7	Sakshi
+8	Saee
+1	Saurbh
+2	Priya
+3	Payal
+4	Ayush
+8 rows selected.SQL>
