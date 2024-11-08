@@ -1,0 +1,133 @@
+(base) sspm@sspm:~$ sudosu
+[sudo] password for sspm: 
+root@sspm:/home/sspm# mongo
+MongoDB shell version v3.6.8
+connecting to: mongodb://127.0.0.1:27017
+Implicit session: session { "id" : UUID("b41a3853-4585-426a-bc73-385f4f773683") }
+MongoDB server version: 3.6.8
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+> use te;
+switched to dbte
+>dbs
+2024-10-14T14:21:15.396+0530 E QUERY    [thread1] ReferenceError: dbs is not defined :
+@(shell):1:1
+> create
+@(shell):1:1
+>db.createCollection('employee')
+{ "ok" : 1 }
+> insert ducument
+>db.employee.insert({emp_id:101,name:'Siddhi',job:'manager',salary:40000})
+WriteResult({ "nInserted" : 1 })
+>db.employee.insert({emp_id:102,name:'Rajshri',job:'Designer',salary:70000})
+WriteResult({ "nInserted" : 1 })
+>db.employee.insert({emp_id:103,name:'Disha',job:'Employee',salary:60000})
+WriteResult({ "nInserted" : 1 })
+>db.employee.insert({emp_id:104,name:'Sham',job:'Employee',salary:40000})
+WriteResult({ "nInserted" : 1 })
+> show document
+>db.employee.find().pretty()
+{
+	"_id" :ObjectId("670cdc2def42073649e0a940"),
+	"emp_id" : 101,
+	"name" : "Siddhi",
+	"job" : "manager",
+	"salary" : 40000
+}
+{
+	"_id" :ObjectId("670cdc99ef42073649e0a941"),
+	"emp_id" : 102,
+	"name" : "Rajshri",
+	"job" : "Designer",
+	"salary" : 70000
+}
+{
+	"_id" :ObjectId("670cdcc8ef42073649e0a942"),
+	"emp_id" : 103,
+	"name" : "Disha",
+	"job" : "Employee",
+	"salary" : 60000
+}
+{
+	"_id" :ObjectId("670cdce0ef42073649e0a943"),
+	"emp_id" : 104,
+	"name" : "Sham",
+	"job" : "Employee",
+	"salary" : 40000
+}
+> update
+>db,employee.update
+> remove
+>db.employee.remove({emp_id:104})
+WriteResult({ "nRemoved" : 1 })
+> show
+>db.employee.find().pretty()
+{
+	"_id" :ObjectId("670cdc2def42073649e0a940"),
+	"emp_id" : 101,
+	"name" : "Siddhi",
+	"job" : "manager",
+	"salary" : 40000
+}
+{
+	"_id" :ObjectId("670cdc99ef42073649e0a941"),
+	"emp_id" : 102,
+	"name" : "Rajshri",
+	"job" : "Designer",
+	"salary" : 70000
+}
+{
+	"_id" :ObjectId("670cdcc8ef42073649e0a942"),
+	"emp_id" : 103,
+	"name" : "Disha",
+	"job" : "Employee",
+	"salary" : 60000
+}
+> update
+>db.employee.update({emp_101,name:'Siddhi'},{$set:{emp_104,name:'Sonali'}})
+>db.employee.update({emp_102,name:'Siddhi'},{$set:{emp_104,name:'Sonali'}})
+>db.employee.update({emp_id:101,name:'Siddhi'},{$set:{emp_id:104,name:'Sonali'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> show
+>db.employee.find().pretty()
+{
+	"_id" :ObjectId("670cdc2def42073649e0a940"),
+	"emp_id" : 104,
+	"name" : "Sonali",
+	"job" : "manager",
+	"salary" : 40000
+}
+{
+	"_id" :ObjectId("670cdc99ef42073649e0a941"),
+	"emp_id" : 102,
+	"name" : "Rajshri",
+	"job" : "Designer",
+	"salary" : 70000
+}
+{
+	"_id" :ObjectId("670cdcc8ef42073649e0a942"),
+	"emp_id" : 103,
+	"name" : "Disha",
+	"job" : "Employee",
+	"salary" : 60000
+}
+> AND Operation
+>db.employee.find({emp_id:104,name:'Sonali'}).pretty()
+{
+	"_id" :ObjectId("670cdc2def42073649e0a940"),
+	"emp_id" : 104,
+	"name" : "Sonali",
+	"job" : "manager",
+	"salary" : 40000
+}
+> OR Operation
+>db.employee.find($or:[{'emp_id':104,name:'Sonali'}]}).pretty()
+>db.employee.find({$or:[{'emp_id':104,name:'Sonali'}]}).pretty()
+{
+	"_id" :ObjectId("670cdc2def42073649e0a940"),
+	"emp_id" : 104,
+	"name" : "Sonali",
+	"job" : "manager",
+	"salary" : 40000
+}
+>
