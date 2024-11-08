@@ -1,0 +1,142 @@
+Aim :Design 10 SQL quries for suitable database application using DML statement all types of join sub query view. 
+QUERIES :
+(base) sspm@sspm:~$ sudosu
+[sudo] password for sspm:  
+root@sspm:/home/sspm# mysql -u root -p Enter password:  
+Welcome to the MySQL monitor.  Commands end with ; or \g. 
+Your MySQL connection id is 9 
+Server version: 8.0.39-0ubuntu0.22.04.1 (Ubuntu) 
+Copyright (c) 2000, 2024, Oracle and/or its affiliates. 
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. 
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement. 
+mysql> create database Lib; Query OK, 1 row affected (0.11 sec) mysql> use Lib; Database changed 
+mysql> create table book(book_idint,book_namevarchar(25),author varchar(35),publisher varchar(30)); 
+Query OK, 0 rows affected (0.47 sec) mysql>desc book; 
++-----------+-------------+------+-----+---------+-------+ 
+| Field     | Type        | Null | Key | Default | Extra | 
++-----------+-------------+------+-----+---------+-------+ 
+| book_id   | int         | YES  |     | NULL    |       | 
+| book_name | varchar(25) | YES  |     | NULL    |       | 
+| author    | varchar(35) | YES  |     | NULL    |       | 
+| publisher | varchar(30) | YES  |     | NULL    |       | 
++-----------+-------------+------+-----+---------+-------+ 
+4 rows in set (0.00 sec) 
+
+mysql> insert into 
+book(book_id,book_name,author,publisher)values(1,'DBMS','Korth','MCGrawHill'),(2,'SSP
+M','Pressman','Addison'),(3,'ISEE','Rahul De','Wileyindia'),(4,'Computer 
+Netwok','J.S.Katre','Veenay Gandhi'),(5,'Computer Graphics','KusumLata','Rishabh
+Anand'),(6,'Engineering Chemistry','ManishaAgarwal','Khanna'),(7,'Mobile 
+Computing','VinaySinghal','Meerut'),(8,'Data Structure','SharadVerma','NishaRathod'); 
+Query OK, 8 rows affected (0.05 sec) Records: 8  Duplicates: 0  Warnings: 0 mysql> select*from book; 
++---------+-----------------------+-----------------+---------------+ 
+| book_id | book_name             | author          | publisher     | +---------+-----------------------+-----------------+---------------+ 
+|       1 | DBMS                  | Korth           | MCGrawHill    | 
+|       2 | SSPM                  | Pressman        | Addison       | 
+|       3 | ISEE                  | Rahul De        | Wileyindia| 
+|       4 | Computer Netwok       | J.S.Katre       | Veenay Gandhi | 
+|       5 | Computer Graphics     | KusumLata      | RishabhAnand | 
+|       6 | Engineering Chemistry | Manisha Agarwal | Khanna        | 
+|       7 | Mobile Computing      | VinaySinghal   | Meerut        | 
+|       8 | Data Structure        | SharadVerma    | NishaRathod  |
++---------+-----------------------+-----------------+---------------+ 
+8 rows in set (0.00 sec) mysql> create table stud(roll_noint,namevarchar(15),book_namevarchar(25)); Query OK, 0 rows affected (0.59 sec) 
+mysql> insert into 
+stud(roll_no,name,book_name)values(301,'Ekta','DBMS'),(302,'Sakshi','Computer Network'),(303,'Siddhi','Mobile Computing'),(304,'Nandini','ISEE'),(305,'Teju','Data Structure'),(306,'Tanuja','Computer Graphics'); 
+Query OK, 6 rows affected (0.08 sec) Records: 6  Duplicates: 0  Warnings: 0 mysql> select*from stud; 
++---------+---------+-------------------+ 
+| roll_no | name    | book_name   | 
++---------+---------+-------------------+ 
+|     301 | Ekta    | DBMS              | 
+|     302 | Sakshi  | Computer Network  | 
+|     303 | Siddhi  | Mobile Computing  | 
+|     304 | Nandini | ISEE              | 
+|     305 | Teju    | Data Structure    | 
+|     306 | Tanuja  | Computer Graphics | 
++---------+---------+-------------------+ 
+6 rows in set (0.00 sec) 
+mysql> select book.book_id,author from book inner join stud on book.book_name=stud.book_name; 
++---------+---------------+ 
+| book_id | author        | +---------+---------------+ 
+|       1 | Korth         | 
+|       3 | Rahul De      | 
+|       5 | KusumLata    | 
+|       7 | VinaySinghal | 
+|       8 | SharadVerma  |
++---------+---------------+ 5 rows in set (0.00 sec) 
+mysql> select book.book_id,book.book_name,book.author,stud.roll_no,stud.name from book left outer join stud on book.book_name=stud.book_name; 
++---------+-----------------------+-----------------+---------+---------+ 
+| book_id | book_name             | author          | roll_no | name    | 
++---------+-----------------------+-----------------+---------+---------+ 
+|       1 | DBMS                  | Korth           |     301 | Ekta    | 
+|       2 | SSPM                  | Pressman        |    NULL | NULL    | 
+|       3 | ISEE                  | Rahul De        |     304 | Nandini | 
+|       4 | Computer Netwok       | J.S.Katre       |    NULL | NULL    | 
+|       5 | Computer Graphics     | KusumLata      |     306 | Tanuja  |
+|       6 | Engineering Chemistry | Manisha Agarwal |    NULL | NULL    | 
+|       7 | Mobile Computing      | VinaySinghal   |     303 | Siddhi  |
+|       8 | Data Structure        | SharadVerma    |     305 | Teju    | 
++---------+-----------------------+-----------------+---------+---------+ 
+8 rows in set (0.00 sec) 
+mysql> select book.book_id,book.book_name,stud.roll_no from book right outer join stud on book.book_name=stud.book_name; 
++---------+-------------------+---------+ 
+| book_id | book_name         | roll_no | 
++---------+-------------------+---------+ 
+|       1 | DBMS              |     301 | 
+|    NULL | NULL              |     302 | 
+|       7 | Mobile Computing  |     303 | 
+|       3 | ISEE              |     304 | 
+|       8 | Data Structure    |     305 | 
+|       5 | Computer Graphics |     306 | 
++---------+-------------------+---------+ 
+6 rows in set (0.00 sec) mysql> create view v2 as select roll_no,book_id,name from book,stud; Query OK, 0 rows affected (2.55 sec) mysql> select*from v2; 
++---------+---------+---------+ 
+| roll_no | book_id | name    | 
++---------+---------+---------+ 
+|     306 |       1 | Tanuja  |
+|     305 |       1 | Teju    | 
+|     304 |       1 | Nandini | 
+|     303 |       1 | Siddhi  | |     302 |       1 | Sakshi  | 
+|     301 |       1 | Ekta    | 
+|     306 |       2 | Tanuja  |
+|     305 |       2 | Teju    | 
+|     304 |       2 | Nandini | 
+|     303 |       2 | Siddhi  | |     302 |       2 | Sakshi  | 
+|     301 |       2 | Ekta    | 
+|     306 |       3 | Tanuja  |
+|     305 |       3 | Teju    | 
+|     304 |       3 | Nandini | 
+|     303 |       3 | Siddhi  | |     302 |       3 | Sakshi  | 
+|     301 |       3 | Ekta    | 
+|     306 |       4 | Tanuja  |
+|     305 |       4 | Teju    | 
+|     304 |       4 | Nandini | 
+|     303 |       4 | Siddhi  | |     302 |       4 | Sakshi  | 
+|     301 |       4 | Ekta    | 
+|     306 |       5 | Tanuja  |
+|     305 |       5 | Teju    | 
+|     304 |       5 | Nandini | 
+|     303 |       5 | Siddhi  | |     302 |       5 | Sakshi  | 
+|     301 |       5 | Ekta    | 
+|     306 |       6 | Tanuja  |
+|     305 |       6 | Teju    | 
+|     304 |       6 | Nandini | 
+|     303 |       6 | Siddhi  |
+|     302 |       6 | Sakshi  | |     301 |       6 | Ekta    | 
+|     306 |       7 | Tanuja  |
+|     305 |       7 | Teju    | 
+|     304 |       7 | Nandini | 
+|     303 |       7 | Siddhi  |
+|     302 |       7 | Sakshi  | |     301 |       7 | Ekta    | 
+|     306 |       8 | Tanuja  |
+|     305 |       8 | Teju    | 
+|     304 |       8 | Nandini | 
+|     303 |       8 | Siddhi  |
+|     302 |       8 | Sakshi  |
+|     301 |       8 | Ekta    | 
++---------+---------+---------+ 48 rows in set (0.00 sec) mysql> select book_name from book where book_id=(select book_id where author='Korth'); +-----------+ 
+| book_name | 
++-----------+ 
+| DBMS      | 
++-----------+ 
+1 row in set (0.02 sec) 
