@@ -1,0 +1,93 @@
+Aim : PL/SQL stored procedure and store function.Write a stored procedures namely proc_grade from the categorization of student. If marks scored by students in examination is<=1500 and marks>=990 then student will be placed in distinction category. If marks scored are between 989 and 900 category is first class. If marks scored are between 899 and 825 category is higher second class.Write PL/SQL block for using procedure created with above requirements. Studmarks(name,total_marks)                                                                                             result(roll_no,name,class)
+QUERIES:
+SQL*Plus: Release 11.2.0.2.0 Production on Wed Oct 9 07:09:17 2024
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: System
+Enter password:
+Connected.
+SQL> create table studmarks(name varchar2(10),total_marks number(5));
+
+Table created.
+
+SQL> create table result(roll_no number(20),name varchar2(20),class varchar2(30));
+
+Table created.
+
+SQL> create or replace procedure proc_grade(rnonumber,name varchar2,marks number)
+2  is
+3  class varchar2(20);
+4  begin
+5  if(marks<=1500 and marks>990)then
+6  class:='Distinction';
+7  elsif(marks<=989 and marks>=900)then
+8  class:='First';
+9  elsif(marks<=899 and marks>=825)then
+10  class:='Higher second';
+11  end if;
+12  insert into studmarks values(name,marks);
+13  insert into result values(rno,name,class);
+14  end;
+15  /
+
+Procedure created.
+
+SQL> exec proc_grade(1,'Shruti','1000')
+
+PL/SQL procedure successfully completed.
+
+SQL> select*from studmarks;
+
+NAME       TOTAL_MARKS
+---------- -----------
+Shruti            1000
+
+SQL> select*from result;
+
+   ROLL_NO NAME                 CLASS
+---------- -------------------- ------------------------------
+         1 Shruti               Distinction
+
+SQL> exec proc_grade(2,'Sakshi','840');
+
+PL/SQL procedure successfully completed.
+
+SQL> select*from studmarks;
+
+NAME       TOTAL_MARKS
+---------- -----------
+Shruti            1000
+Sakshi             840
+
+SQL> select*from result;
+
+   ROLL_NO NAME                 CLASS
+---------- -------------------- ------------------------------
+         1 Shruti               Distinction
+         2 Sakshi               Higher second
+
+SQL> exec proc_grade(3,'Tanvi','960');
+
+PL/SQL procedure successfully completed.
+
+SQL> select*from studmarks;
+
+NAME       TOTAL_MARKS
+---------- -----------
+Shruti            1000
+Sakshi             840
+Tanvi              960
+
+SQL> select*from result;
+
+   ROLL_NO NAME                 CLASS
+---------- -------------------- ------------------------------
+         1 Shruti               Distinction
+         2 Sakshi               Higher second
+         3 Tanvi                First
+
+SQL>
+
+
